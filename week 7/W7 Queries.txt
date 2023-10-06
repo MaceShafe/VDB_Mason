@@ -1,0 +1,58 @@
+	What is the most expensive rent?
+
+SELECT MAX(Rent) AS Expr1
+FROM     Apartment
+
+780.00
+	
+	What is the total square feet of all the apartments in Building_ID 2?
+
+SELECT Building.Building_ID, SUM(Apartment.Sq_Ft) AS Expr1
+FROM     Building INNER JOIN
+                  Apartment ON Building.Building_ID = Apartment.Building_ID
+GROUP BY Building.Building_ID
+HAVING (Building.Building_ID = 2)
+
+2200
+
+	What is the Name of the tenant that pays the most rent? (use sort to put them at the top of the results)  (be careful about the join connection ... you can delete the one that is unnecessary by clicking on the box in the middle of the line and pressing the delete key)
+
+SELECT Person.First_Name, Person.Last_Name, Apartment.Rent
+FROM     Person INNER JOIN
+                  Apartment ON Person.Person_ID = Apartment.Tenant_ID
+ORDER BY Apartment.Rent DESC
+
+Sally Doe                           
+
+	What is the average number of bedrooms per apartment owned by this property management company?
+
+SELECT AVG(Beds) AS Expr1
+FROM     Apartment
+
+2
+
+	How many buildings do they manage?
+
+	SELECT COUNT(DISTINCT Building_Name) AS Expr1
+FROM     Building
+
+4
+
+	How many apartments does Mark Degallier manage? (filter by Person.First_Name and Last_Name)
+	
+	SELECT Person.First_Name, Person.Last_Name, COUNT(Apartment.Apt_Number) AS Expr1
+FROM     Apartment INNER JOIN
+                  Person ON Apartment.Manager_ID = Person.Person_ID
+GROUP BY Person.First_Name, Person.Last_Name
+HAVING (Person.First_Name = N'Mark') AND (Person.Last_Name = N'Degallier')
+
+4
+
+	Which Invoice_ID received the smallest Payment (receipt)? (sort so answer appears first in results)
+
+	SELECT Receipt.ReceiptAmount, Invoice.InvoiceID
+FROM     Invoice INNER JOIN
+                  Receipt ON Invoice.InvoiceID = Receipt.Invoice_ID
+ORDER BY Receipt.ReceiptAmount
+
+1
